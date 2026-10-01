@@ -7,8 +7,11 @@ params = yaml.safe_load(open("params.yaml"))["preprocess"]
 
 raw = np.load("data/raw/fashion_mnist.npz")
 
-x_train = raw["x_train"] / 255.0
-x_test = raw["x_test"] / 255.0
+mean = raw["x_train"].mean()
+std  = raw["x_train"].std()
+
+x_train = raw["x_train"] / std
+x_test = raw["x_test"] / std
 
 x_train, x_val, y_train, y_val = train_test_split(
     x_train, raw["y_train"],
